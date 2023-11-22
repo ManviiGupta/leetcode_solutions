@@ -1,0 +1,47 @@
+Q-532. K-diff Pairs in an Array
+
+Approch -1  sorting and using 2 pointers  TC-> o(nlogn) SC->o(1)
+class Solution {
+public:
+   int findPairs(vector<int>& nums, int k) {
+sort( begin(nums), end(nums) );
+int i = 0, j = 1, ans = 0, n = nums.size();
+while( j < n ){
+if( nums[j]-nums[i] <= k ){
+if( nums[j]-nums[i] == k ) ans++;
+int cur = nums[j];
+while( j < n and cur == nums[j] ) j++;
+}
+else{
+int cur = nums[i];
+while( i < n and cur == nums[i] ) i++;
+if( j == i ) j++;
+}
+}
+return ans;
+}
+};
+
+
+Approch -2  using map TC->o(n) sc->o(n)
+class Solution {
+public:
+    int findPairs(vector<int>& nums, int k) {
+        unordered_map<int,int> a;
+        for(int i:nums)
+            a[i]++;
+        int ans=0;
+        for(auto x:a)
+        {
+            if(k==0)
+            {    
+                if(x.second>1)
+                ans++;
+            }
+             else if(a.find(x.first+k)!=a.end())
+                ans++;
+        }
+        
+        return ans;
+    }
+};
